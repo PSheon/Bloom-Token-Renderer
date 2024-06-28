@@ -1,5 +1,5 @@
 import { createSVGWindow } from "svgdom";
-import { SVG, Rect, registerWindow, Color, Spring } from "@svgdotjs/svg.js";
+import { SVG, registerWindow } from "@svgdotjs/svg.js";
 
 const COLOR_PLATE = {
   orange: {
@@ -362,7 +362,7 @@ const main = async (plate) => {
       "stroke-dashoffset": 0,
       "stroke-linejoin": "miter",
       "stroke-miterlimit": 4,
-      fill: "rgb(102,108,255)",
+      fill: plate.typography.fill,
       "fill-rule": "nonzero",
       opacity: 1,
       "vector-effect": "non-scaling-stroke",
@@ -375,4 +375,4 @@ const main = async (plate) => {
   // or
   // console.log(canvas.node.outerHTML);
 };
-main(COLOR_PLATE.platinum);
+main(COLOR_PLATE.orange);
