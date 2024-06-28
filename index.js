@@ -1,7 +1,274 @@
 import { createSVGWindow } from "svgdom";
 import { SVG, Rect, registerWindow, Color, Spring } from "@svgdotjs/svg.js";
 
-const main = async () => {
+const COLOR_PLATE = {
+  orange: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#FF6B6B", "#FF9898"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#F4665D", "#F45DB8"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#F45D5D", "#FFDE9E"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.8,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon: "50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#FFCACA",
+      family: "Inconsolata",
+    },
+  },
+
+  green: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#06CC61", "#A1FFC1"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#1C8D35", "#EEF086"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#FCFE99", "#76F0A7"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.8,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon: "50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#D3FFDD",
+      family: "Inconsolata",
+    },
+  },
+
+  purple: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#286FFA", "#6083FF"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#4B88FF", "#FF9898"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#5D63F4", "#FF6DC5"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.3,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon: "50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#DECFFF",
+      family: "Inconsolata",
+    },
+  },
+
+  pink: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#FF69B4", "#FFC0CB"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#FF1493", "#FFB6C1"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#FF69B4", "#FFDEE9"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.8,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon: "50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#FFD1DC",
+      family: "Inconsolata",
+    },
+  },
+
+  brown: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#8B4513", "#D2691E"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#A0522D", "#DEB887"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#CD853F", "#F4A460"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.8,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon: "50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#F5DEB3",
+      family: "Inconsolata",
+    },
+  },
+
+  gold: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#FFD700", "#FFEC8B"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#FFA500", "#FFD700"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#FFFACD", "#FFD700"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.8,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon: "50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#FFF8DC",
+      family: "Inconsolata",
+    },
+  },
+
+  silver: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#C0C0C0", "#D3D3D3"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#B0C4DE", "#C0C0C0"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#DCDCDC", "#C0C0C0"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.8,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon: "50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#F5F5F5",
+      family: "Inconsolata",
+    },
+  },
+
+  platinum: {
+    background: "#201F1F",
+    cover: [
+      {
+        stop: ["#E5E4E2", "#B0B0B0"],
+        from: [0, 0],
+        to: [-1, 1],
+        opacity: 0.8,
+      },
+      {
+        stop: ["#B0C4DE", "#E5E4E2"],
+        from: [0, 1],
+        to: [1, 0],
+        opacity: 0.9,
+      },
+      {
+        stop: ["#F0F8FF", "#E5E4E2"],
+        from: [0, 1],
+        to: [1, 1],
+        opacity: 0.8,
+      },
+    ],
+    coverDeco: {
+      count: 12,
+      polygon:
+        "50,0 68.31,24.80 97.55,34.55 79.62,59.63 79.39,90.45 50,81.15 20.61,90.45 20.38,59.63 2.45,34.55 31.69,24.80",
+      fillColor: "#201F1F",
+    },
+    typography: {
+      fill: "#F8F8FF",
+      family: "Inconsolata",
+    },
+  },
+};
+
+const main = async (plate) => {
   const { random } = Math;
 
   // returns a window with a document and an svg root node
@@ -15,41 +282,33 @@ const main = async () => {
   const canvas = SVG(document.documentElement).size(725, 1040);
 
   // create a background
-  canvas.rect(725, 1040).attr({ fill: "#201F1F", rx: 32 });
+  canvas.rect(725, 1040).attr({ fill: plate.background, rx: 32 });
 
   // create a cover background
-  const coverGradient = canvas
-    .gradient("linear", function (add) {
-      add.stop(0, "#FF6B6B");
-      add.stop(1, "#FF9898");
-    })
-    .from(0, 0)
-    .to(-1, 1);
-  canvas
-    .rect(600, 630)
-    .move(64, 64)
-    .attr({ fill: coverGradient, rx: 32, opacity: 0.8 });
-  const CoverOverlayGradient = canvas
-    .gradient("linear", function (add) {
-      add.stop(0, "#F4665D");
-      add.stop(1, "#F45DB8");
-    })
-    .from(0, 1)
-    .to(1, 0);
-  canvas.rect(600, 630).move(64, 64).attr({
-    fill: CoverOverlayGradient,
-    rx: 32,
-    opacity: 0.8,
-  });
+  for (let i = 0; i < plate.cover.length; ++i) {
+    const gradientPlate = plate.cover[i];
+    let coverGradient = canvas
+      .gradient("linear", function (add) {
+        add.stop(0, gradientPlate.stop[0]);
+        add.stop(1, gradientPlate.stop[1]);
+      })
+      .from(gradientPlate.from[0], gradientPlate.from[1])
+      .to(gradientPlate.to[0], gradientPlate.to[1]);
+    canvas.rect(600, 630).move(64, 64).attr({
+      fill: coverGradient,
+      rx: 32,
+      opacity: gradientPlate.opacity,
+    });
+  }
 
   // Cover deco
-  for (let i = 0; i < 12; ++i) {
-    let fillColor = "#201F1F";
+  for (let i = 0; i < plate.coverDeco.count; ++i) {
+    let fillColor = plate.coverDeco.fillColor;
     canvas
-      .polygon("50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40")
+      .polygon(plate.coverDeco.polygon)
       .fill(fillColor)
       .stroke({
-        width: 15,
+        width: 12,
         color: fillColor,
         opacity: 0.4,
       })
@@ -60,11 +319,19 @@ const main = async () => {
   canvas.text(function (add) {
     add
       .tspan("Hello, World!")
-      .font({ size: 36, fill: "#FFCACA", family: "Inconsolata" })
+      .font({
+        size: 36,
+        fill: plate.typography.fill,
+        family: plate.typography.family,
+      })
       .amove(64, 780);
     add
       .tspan("subtitle!")
-      .font({ size: 24, fill: "#FFCACA", family: "Inconsolata" })
+      .font({
+        size: 24,
+        fill: plate.typography.fill,
+        family: plate.typography.family,
+      })
       .amove(64, 840);
   });
 
@@ -72,7 +339,11 @@ const main = async () => {
   canvas.text(function (add) {
     add
       .tspan("Footer")
-      .font({ size: 36, fill: "#FFCACA", family: "Inconsolata" })
+      .font({
+        size: 36,
+        fill: plate.typography.fill,
+        family: plate.typography.family,
+      })
       .amove(64, 980);
   });
 
@@ -104,4 +375,4 @@ const main = async () => {
   // or
   // console.log(canvas.node.outerHTML);
 };
-main();
+main(COLOR_PLATE.platinum);
